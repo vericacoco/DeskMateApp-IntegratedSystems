@@ -1,0 +1,63 @@
+﻿@model List<DeskMateApp.Domain.DTOs.PublicHolidayDto>
+
+@{
+    ViewData["Title"] = "Holidays";
+    var next = ViewBag.NextHoliday as DeskMateApp.Domain.DTOs.PublicHolidayDto;
+}
+
+<h1>Holidays (@ViewBag.CountryCode) - @ViewBag.Year</h1>
+
+@if (next != null)
+{
+    <div class="alert alert-info">
+        Next: <strong>@next.Date.ToString("dd MMM yyyy")</strong> — @next.Title
+        @if (next.IsWeekend)
+        {
+            <span class="badge bg-secondary ms-2">Weekend</span>
+        }
+    </div>
+}
+
+<form method="get" class="row g-2 mb-3">
+    <div class="col-auto">
+        <input name="year" type="number" class="form-control" value="@ViewBag.Year" min="2000" max="2100" />
+    </div>
+    <div class="col-auto">
+        <button class="btn btn-primary" type="submit">Load</button>
+    </div>
+</form>
+
+<table class="table table-striped align-middle">
+<thead>
+    <tr>
+        <th>Date</th>
+        <th>Holiday</th>
+        <th>Month</th>
+        <th></th>
+    </tr>
+</thead>
+<tbody>
+    @foreach (var h in Model)
+    {
+        <tr class="@(h.IsUpcoming ? "" : "text-muted")">
+            <td>@h.Date.ToString("dd MMM yyyy")</td>
+            <td>
+                <div class="fw-semibold">@h.Name</div>
+                <div class="small">@h.LocalName</div>
+            </td>
+            <td>@h.MonthLabel</td>
+            <td>
+                @if (h.IsWeekend)
+                {
+                    <span class="badge bg-secondary">Weekend</span>
+                }
+                @if (h.IsUpcoming)
+                {
+                    <span class="badge bg-success ms-1">Upcoming</span>
+                }
+            </td>
+        </tr>
+    }
+</tbody>
+</table>
+

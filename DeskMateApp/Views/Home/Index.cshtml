@@ -1,0 +1,15 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="hero card shadow-sm p-4 p-md-5">
+    <h1 class="display-6 fw-bold mb-2">DeskMate</h1>
+    <p class="text-muted mb-4">
+        Reserve desks, manage amenities, and check holidays in one place.
+    </p>
+
+    <div class="d-flex gap-2 flex-wrap">
+        <a class="btn btn-primary" asp-controller="Reservations" asp-action="Index">Go to Reservations</a>
+        <a class="btn btn-outline-primary" asp-controller="Holidays" asp-action="Index">View Holidays</a>
+    </div>
+</div>

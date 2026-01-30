@@ -1,0 +1,26 @@
+﻿@model DeskMateApp.Domain.DTO.AmenityAssignDto
+
+<h2>Assign Amenity to Desk</h2>
+
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<form asp-action="Assign" method="post">
+    <div class="mb-3">
+        <label class="form-label">Desk</label>
+        <select asp-for="DeskId" class="form-control" asp-items="ViewBag.Desks"></select>
+        <span asp-validation-for="DeskId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Amenity</label>
+        <select asp-for="AmenityId" class="form-control" asp-items="ViewBag.Amenities"></select>
+        <span asp-validation-for="AmenityId" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Assign</button>
+    <a asp-action="Index" class="btn btn-secondary">Back</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,91 @@
+﻿@using System.Security.Claims
+@model IEnumerable<DeskMateApp.Domain.DomainModels.Reservation>
+
+
+@{
+    ViewData["Title"] = "Reservations";
+}
+
+<div class="page-header d-flex align-items-center justify-content-between mb-3">
+    <div>
+        <h1 class="mb-0">Reservations</h1>
+        <div class="text-muted">Overview of all reservations</div>
+    </div>
+
+    <a asp-action="Create" class="btn btn-primary">
+        + Create Reservation
+    </a>
+</div>
+
+<div class="card shadow-sm">
+  <div class="card-body p-0">
+     <div class="table-responsive">
+            <table class ="table table-hover align-middle mb-0">
+                <thead class="table-light">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Desk)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateFrom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateTo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedAt)
+            </th>
+                        <th class="text-start">Actions</th>
+            <th></th>
+                        
+        </tr>
+        </thead>
+        <tbody>
+ @{
+    var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+    var isAdmin = User.IsInRole("Admin");
+ }
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Desk.Code)
+            </td>
+            <td>
+                    @(item.User?.UserName ?? item.User?.Email ?? item.UserId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateFrom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateTo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedAt)
+            </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+
+                    @if (isAdmin || item.UserId == currentUserId)
+                    {
+                        <text> | </text>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                        <text> | </text>
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    }
+                </td>
+        </tr>
+}     
+         </tbody>
+</table>
+</div>
+</div>
+</div>
